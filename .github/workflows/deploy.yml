@@ -1,0 +1,23 @@
+name: Deploy Bricks Child Theme to Webempresa
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: FTP Deploy to Webempresa
+        uses: SamKirkland/ftp-deploy-action@v4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          server-dir: "/public_html/wp-content/themes/bricks-child/"
+          local-dir: "./"
